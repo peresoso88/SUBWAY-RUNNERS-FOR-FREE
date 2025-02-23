@@ -9,12 +9,14 @@ public class CharacterMovement : MonoBehaviour
     public float leftLimit = - 5.0f;
     public float RightLimit = 5.0f;
     public bool isGrounded;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Animator animator;
     public bool jump = false;
     public bool roll = false;
     public bool Droll = false;
     public BoxCollider Trigger;
+    [SerializeField] AudioSource jumpFx;
+    [SerializeField] AudioSource Rolling;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +48,7 @@ public class CharacterMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded && roll == false)
         {
             Jump();
-
+            jumpFx.Play();
             jump = true;
 
             animator.SetBool("jump", true);
@@ -55,6 +57,7 @@ public class CharacterMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && jump == false)
         {
+            Rolling.Play();
             roll = true;
             Droll = true;
             animator.SetBool("roll", true);
@@ -65,7 +68,7 @@ public class CharacterMovement : MonoBehaviour
         if (Droll == true)
         {
             Trigger.enabled = false;
-            Debug.Log("Trigger position: ");
+            
         }
 
     }
@@ -83,7 +86,11 @@ public class CharacterMovement : MonoBehaviour
             isGrounded = true;
             animator.SetBool("jump", false);
             jump = false;
-            
+
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
   
@@ -94,4 +101,5 @@ public class CharacterMovement : MonoBehaviour
         Trigger.enabled = true;
         animator.SetBool("roll", false);
     }
+  
 }
