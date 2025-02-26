@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UIElements;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public float CharacterSpeed = 5.0f;
+    public float CharacterSpeed = 15.0f;
     public float jumpForce = 10f;
     public float leftLimit = - 5.0f;
     public float RightLimit = 5.0f;
@@ -33,12 +34,12 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * CharacterSpeed, Space.World);
+
         if (Input.GetKeyDown(KeyCode.A) && transform.position.x > leftLimit) 
         {
 
             transform.Translate(new Vector3(-3, 0, 0));
-
-
+          //  transform.position = Vector3.Lerp(transform.position, new Vector3(-3, 0, 0), Time.deltaTime * 2);
 
         }
         if (Input.GetKeyDown(KeyCode.D) && transform.position.x < RightLimit)
